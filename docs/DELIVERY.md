@@ -4,7 +4,10 @@ The complete source and installable extension are supplied in the conversation's
 ZIP artifacts. The local project is `edge-design-capture`; the browser extension
 is named Design Lens. Installation and usage are in README.md.
 
-## Verified locally
+## Original local verification
+
+The following checks describe the original local build and report, not a native
+extension install on this managed environment.
 
 - JavaScript/Python syntax, MV3 paths, declared permissions, CSP and static safety checks.
 - 32 passing Node unit tests covering exports, sanitization-related helpers, message
@@ -29,22 +32,34 @@ screenshot/clipboard/storage integration, and axe were not validated locally.
 The source includes a separate native test and CI workflow, not a passing result.
 Branded Chrome/Edge manual smoke tests and store publication were not performed.
 
-GitHub issue #1 and branch `feature/1-design-capture` were created. The remote
-branch remains at bootstrap commit `090e241585c4eda09bd3e9e4a9ada0030c7035e9`.
-A write of the main content engine was blocked by the connector with:
-"This tool call was blocked by OpenAI because we couldn't determine the safety
-status of the request." That request was not retried through a different route.
-Previously accepted foundation objects were not attached to a branch as a broken
-partial application. No complete implementation PR, CI run, release, or merge is
-claimed. The issue remains open for resolving source publication and native tests.
+At the time of this original delivery report, issue #1 and branch
+`feature/1-design-capture` existed at bootstrap commit
+`090e241585c4eda09bd3e9e4a9ada0030c7035e9`. The initial write of the main content
+engine had been blocked; no implementation PR or CI result was then claimed. This
+paragraph records the earlier status and is superseded by the follow-up below.
+
+## Follow-up review status
+
+The complete source is now in draft PR #2 from `feature/1-design-capture` to `main`.
+The current draft workflow runs syntax, manifest, static-safety and unit checks,
+then packages the source; it defers browser tooling and native browser tests until
+the PR is marked ready for review. The passing draft checks do not establish native
+extension integration or axe results.
+
+An earlier automatically triggered PR run on an intermediate commit passed syntax,
+unit and simulated DOM/UI checks, then failed the native suite because the toolbar
+shortcut did not grant `activeTab` to the fixture. No native pass or axe result is
+claimed. Review the live PR for its exact head and current checks.
+
+The PR remains draft. No browser installation, permission change, deployment, store
+release, or merge is included. Specific approval identifying the PR and head SHA is
+required before merging.
 
 ## Preserve on continuation
 
-Use the supplied full source ZIP and the actual repository state, not assumptions
-about a local machine. Keep the local-only runtime, minimal permissions, explicit
-observed-versus-inferred labels, no font distribution, and no paywall/source recovery
-claims. Preserve the completed tests. Resolve the connector write block through
-normal authorized tooling before publishing the blocked request; do not split or
-re-encode it just to evade the check. Run native tests in a permitted test environment
-and inspect the real current-head results before claiming end-to-end readiness.
-Specific approval is still required before merging.
+Use the current repository and PR state, not assumptions about a local machine.
+Keep the local-only runtime, minimal permissions, explicit observed-versus-inferred
+labels, no font distribution, and no paywall/source recovery claims. Preserve the
+completed tests. Review the latest draft head and its checks. Do not run native tests
+with weakened browser security; use a permitted environment only when authorized.
+Specific approval identifying the PR and exact head SHA is required before merging.

@@ -2,10 +2,11 @@
 
 Issue: https://github.com/spencer-life/edge-design-capture/issues/1
 Branch: feature/1-design-capture
-Status: implemented and packaged locally. Source publication was blocked by the
-GitHub connector safety check. The remote branch still contains only its bootstrap
-README; no complete implementation PR or native CI run has been published. Do not
-merge without the specific approval required by docs/git-workflow.md.
+Status: implemented and packaged locally; the complete source is now in draft PR
+#2. The original publication block below describes an earlier state. An intermediate
+CI run failed the native activeTab fixture check; see docs/DELIVERY.md for the current
+check summary. Do not merge without the specific approval required by
+docs/git-workflow.md.
 
 ## Intent and decisions
 
