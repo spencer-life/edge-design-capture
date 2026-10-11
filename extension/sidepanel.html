@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Lens</title><link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to inspector</a>
+<header class="app-header">
+  <div class="brand"><span class="brandmark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div><h1>Design Lens</h1><p>Take the design. Keep the context.</p></div></div>
+  <div class="header-actions"><button id="popout" class="icon-button" aria-label="Open inspector in a separate window" title="Open in a window">↗</button><button id="theme" class="icon-button" aria-label="Switch to light theme" title="Switch theme">◐</button><button id="close" class="icon-button" aria-label="Close inspector" title="Close inspector">×</button></div>
+</header>
+<div class="connection"><span id="connection-dot" class="dot"></span><span id="source-label">Connect to a website</span><button id="connect" class="text-button">Connect</button></div>
+<div class="toolstrip"><button id="pick" class="button violet"><span aria-hidden="true">⌖</span> Pick element</button><button id="scan" class="button outline">Scan page</button><button id="stop" class="button outline small" hidden>Stop</button></div>
+<div id="status" class="status" role="status" aria-live="polite">Open a website and click the toolbar icon to begin.</div>
+<nav class="tabs" role="tablist" aria-label="Design tools">
+<button role="tab" aria-selected="true" aria-controls="inspect-pane" id="inspect-tab" data-tab="inspect">Inspect</button>
+<button role="tab" aria-selected="false" aria-controls="system-pane" id="system-tab" data-tab="system" tabindex="-1">System</button>
+<button role="tab" aria-selected="false" aria-controls="export-pane" id="export-tab" data-tab="export" tabindex="-1">Capture</button>
+<button role="tab" aria-selected="false" aria-controls="library-pane" id="library-tab" data-tab="library" tabindex="-1">Saved <span id="saved-count">0</span></button>
+</nav>
+<main id="main" tabindex="-1">
+<section id="inspect-pane" role="tabpanel" aria-labelledby="inspect-tab">
+  <div id="inspect-empty" class="empty"><div class="empty-mark" aria-hidden="true">⌖</div><h2>Start with something you like.</h2><p>Pick a button, card, section, or any live element. Get its styles, structure, and the details worth keeping.</p><div class="hint"><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd><span>Open this inspector</span></div><p class="fine">On Mobbin and other screenshot galleries, use <strong>Capture → Image reference</strong> for the design inside an image.</p></div>
+  <div id="selection-view" hidden>
+    <div class="section-heading"><span class="eyebrow">Selected element</span><span id="selection-kind" class="tag"></span></div>
+    <h2 id="selection-title" class="mono selected-title"></h2>
+    <p id="selection-size" class="muted"></p>
+    <div id="breadcrumbs" class="breadcrumbs" aria-label="Element hierarchy"></div>
+    <div class="navigation"><button class="button outline small" id="parent">↑ Parent</button><button class="button outline small" id="child">↓ Child</button><button class="button outline small" id="previous">← Previous</button><button class="button outline small" id="next">Next →</button></div>
+    <div class="button-row"><button id="capture-from-inspect" class="button blue">Capture component</button><button id="refresh" class="button outline">Refresh</button></div>
+    <div id="selection-warnings" class="warnings"></div>
+    <details open><summary>Typography & color</summary><div id="typography-rows" class="property-list"></div><p id="contrast" class="fine"></p></details>
+    <details open><summary>Spacing & layout</summary><div id="box-model" class="box-model" aria-label="Selected element box model"><div class="box-margin"><span id="margin-label"></span><div class="box-border"><span id="border-label"></span><div class="box-padding"><span id="padding-label"></span><div id="box-content" class="box-content"></div></div></div></div></div><div id="layout-rows" class="property-list"></div></details>
+    <details><summary>Surfaces & effects</summary><div id="surface-rows" class="property-list"></div></details>
+    <details><summary>Motion & transforms</summary><p class="fine">Current computed motion properties. Keyframes and application behavior are not recovered.</p><div id="motion-rows" class="property-list"></div></details>
+    <details><summary>Semantics & measurement</summary><div id="semantics" class="property-list"></div><button id="pin-measure" class="button outline">Pin as reference A</button><p id="measurement" class="fine">Pin one element, then select another to compare their positions.</p></details>
+    <div class="button-row"><button id="copy-styles" class="button green">Copy styles</button><button id="copy-selection" class="button outline">Copy selection JSON</button></div>
+  </div>
+</section>
+<section id="system-pane" role="tabpanel" aria-labelledby="system-tab" hidden>
+  <div class="section-heading"><h2>Design system</h2><span id="scan-count" class="muted"></span></div>
+  <p class="fine">Observed values from this page and its current theme. No guessed framework names or fabricated semantic tokens.</p>
+  <label class="search-label" for="system-search">Filter values</label><input id="system-search" type="search" placeholder="Search a token, font, or color…" autocomplete="off">
+  <div class="subtabs" role="tablist" aria-label="Design system categories">
+    <button role="tab" aria-selected="true" data-system="tokens" id="tokens-system-tab" aria-controls="system-content">Tokens</button><button role="tab" aria-selected="false" data-system="colors" id="colors-system-tab" aria-controls="system-content" tabindex="-1">Colors</button><button role="tab" aria-selected="false" data-system="fonts" id="fonts-system-tab" aria-controls="system-content" tabindex="-1">Fonts</button><button role="tab" aria-selected="false" data-system="scale" id="scale-system-tab" aria-controls="system-content" tabindex="-1">Scale</button><button role="tab" aria-selected="false" data-system="assets" id="assets-system-tab" aria-controls="system-content" tabindex="-1">Assets</button>
+  </div>
+  <div class="button-row" id="system-actions"><button id="copy-system" class="button green">Copy tokens CSS</button><button id="download-system" class="button outline">Download JSON</button><button id="eyedropper" class="button outline" hidden>Eyedropper</button></div>
+  <div id="system-content" class="system-content" role="tabpanel" aria-labelledby="tokens-system-tab"><div class="empty compact"><h3>No scan yet.</h3><p>Use <strong>Scan page</strong> to collect tokens, colors, fonts, layout values, and assets.</p></div></div>
+  <div id="scan-warnings" class="warnings"></div>
+</section>
+<section id="export-pane" role="tabpanel" aria-labelledby="export-tab" hidden>
+  <div class="section-heading"><h2>Capture & export</h2><span class="tag">Local only</span></div>
+  <p class="fine">A useful starting point, not the original source. Review visible text and asset links before sharing.</p>
+  <div class="capture-card">
+    <h3>Live component</h3><p>Sanitized HTML, computed CSS, and a static React component. Parent selection captures a whole section.</p>
+    <label class="check"><input id="include-text" type="checkbox" checked> Include visible text in component capture</label>
+    <button id="capture-component" class="button blue full">Capture selected component</button>
+    <p id="component-info" class="fine">Choose an element in Inspect first.</p>
+  </div>
+  <details id="preview-details"><summary>Safe component preview</summary><p class="fine">Scripts and external asset requests are blocked in this preview. Open shadows are flattened; rendering can differ.</p><iframe id="component-preview" title="Static captured component preview" sandbox=""></iframe></details>
+  <div class="capture-card">
+    <h3>Image reference</h3><p>For screenshots, canvas content, or designs inside an image. Captures pixels—not fonts, tokens, or original code.</p>
+    <div class="button-row"><button id="capture-region" class="button violet">Select area</button><button id="capture-visible" class="button outline">Visible page</button><button id="capture-element" class="button outline">Element</button></div>
+    <label class="file-label" for="import-image">Or choose an image</label><input id="import-image" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif">
+    <div id="reference-view" hidden><img id="reference-image" alt="Captured design reference"><p id="reference-info" class="fine"></p><div id="reference-colors" class="swatch-row"></div><div class="button-row"><button id="download-image" class="button outline">Save PNG</button><button id="copy-image" class="button outline">Copy image</button><button id="clear-image" class="button outline">Remove</button></div></div>
+  </div>
+  <label class="field-label" for="target-stack">Codex reconstruction target</label><select id="target-stack"><option>React + TypeScript + Tailwind CSS</option><option>Semantic HTML + CSS</option><option>My existing project and design system</option></select>
+  <label class="field-label" for="export-format">Export format</label><select id="export-format"><option value="prompt">Copy for Codex · complete brief</option><option value="html">Component · HTML document</option><option value="css">Component · CSS</option><option value="react">Component · React TSX</option><option value="tokens">Observed tokens · CSS</option><option value="json">Everything · JSON report</option></select>
+  <label class="check"><input id="allow-assets" type="checkbox"> Allow external images when opening the exported HTML</label>
+  <label class="field-label" for="export-output">Export preview</label><textarea id="export-output" readonly spellcheck="false" placeholder="Capture a component, scan a page, or add an image reference."></textarea>
+  <div class="button-row"><button id="copy-export" class="button green">Copy export</button><button id="download-export" class="button outline">Download file</button></div>
+  <button id="download-bundle" class="button violet full">Download complete bundle · ZIP</button>
+  <div id="export-warnings" class="warnings"></div>
+</section>
+<section id="library-pane" role="tabpanel" aria-labelledby="library-tab" hidden>
+  <div class="section-heading"><h2>Saved references</h2><span id="library-capacity" class="muted"></span></div>
+  <p class="fine">Stored only in this browser profile. Nothing syncs or uploads. Save up to 16 captures; export important references before uninstalling.</p>
+  <label class="field-label" for="save-name">Name this capture</label><input id="save-name" maxlength="80" placeholder="e.g. Dashboard card / typography study">
+  <button id="save-current" class="button violet full">Save current reference</button>
+  <div id="library-list"></div>
+</section>
+</main>
+<footer class="app-footer"><button id="copy-all" class="button green">Copy for Codex</button><button id="quick-save" class="button outline">Save</button><span id="footer-note">No accounts. No uploads.</span></footer>
+<script type="module" src="sidepanel.js"></script>
+</body></html>

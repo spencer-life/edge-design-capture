@@ -1,0 +1,2 @@
+# Test-only. Runtime extension has no dependencies. Verified local harness version.
+playwright==1.57.0

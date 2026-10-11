@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {zipFiles,crc32} from '../extension/lib/zip.js';
+test('CRC32 standard check vector',()=>assert.equal(crc32(new TextEncoder().encode('123456789')),0xcbf43926));
+test('ZIP has valid local and central directory signatures',async()=>{const blob=zipFiles([{name:'hello.txt',data:'Hello'}]);const b=await blob.arrayBuffer(),d=new DataView(b);assert.equal(d.getUint32(0,true),0x04034b50);assert.equal(d.getUint32(b.byteLength-22,true),0x06054b50);const center=d.getUint32(b.byteLength-6,true);assert.equal(d.getUint32(center,true),0x02014b50);assert.equal(d.getUint32(18,true),5);});
+test('ZIP rejects traversal, invalid bytes and oversized exports',()=>{assert.throws(()=>zipFiles([{name:'../x',data:'bad'}]),/Unsafe/);assert.throws(()=>zipFiles([{name:'x',data:42}]),/Invalid/);assert.throws(()=>zipFiles([{name:'x',data:new Uint8Array(16000001)}]),/exceeds/);assert.throws(()=>zipFiles([]),/between/);});
