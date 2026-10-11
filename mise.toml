@@ -1,0 +1,15 @@
+[tools]
+node = "22.16.0"
+
+[tasks.check]
+run = "node scripts/check.mjs"
+[tasks.test]
+run = "node --test tests/*.test.mjs"
+[tasks."test:browser"]
+run = "python3 tests/browser.py"
+[tasks.ci]
+run = "npm run ci"
+[tasks.security]
+run = "node scripts/check.mjs --security"
+[tasks.package]
+run = "python3 scripts/package.py"

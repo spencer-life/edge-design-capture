@@ -1,0 +1,19 @@
+{
+  "name": "edge-design-capture",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first design inspection and component capture for Chrome and Edge",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "python3 tests/browser.py",
+    "ci": "npm run check && npm test && npm run test:browser",
+    "package": "npm run check && python3 scripts/package.py",
+    "test:native": "python3 tests/native.py",
+    "security": "node scripts/check.mjs --security"
+  }
+}
